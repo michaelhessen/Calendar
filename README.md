@@ -1,2 +1,0 @@
-# Calendar
-An AI calendar
