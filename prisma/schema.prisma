@@ -1,0 +1,117 @@
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+enum Provider {
+  GOOGLE
+  MICROSOFT
+}
+
+enum Difficulty {
+  EASY
+  MEDIUM
+  HARD
+}
+
+model User {
+  id              String            @id @default(cuid())
+  email           String            @unique
+  timeZone        String            @default("Europe/Stockholm")
+  preferencesJson Json?
+  createdAt       DateTime          @default(now())
+  updatedAt       DateTime          @updatedAt
+
+  accounts        CalendarAccount[]
+  eventShadows    EventShadow[]
+  tasks           Task[]
+  habits          Habit[]
+  planningRuns    PlanningRun[]
+}
+
+model CalendarAccount {
+  id                String   @id @default(cuid())
+  provider          Provider
+  refreshToken      String
+  primaryCalendarId String
+  createdAt         DateTime @default(now())
+  updatedAt         DateTime @updatedAt
+
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId String
+
+  @@unique([userId, provider])
+}
+
+model EventShadow {
+  id              String   @id @default(cuid())
+  providerEventId String
+  provider        Provider
+  isLocked        Boolean  @default(false)
+  flexibility     Float    @default(0.5)
+  importance      Int      @default(3)
+  tags            String[]
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId String
+
+  @@unique([userId, provider, providerEventId])
+}
+
+model Task {
+  id                String     @id @default(cuid())
+  title             String
+  description       String?
+  dueAt             DateTime
+  estimatedMinutes  Int
+  priority          Int        @default(3)
+  difficulty        Difficulty
+  sourceEventId     String?
+  createdAt         DateTime   @default(now())
+  updatedAt         DateTime   @updatedAt
+
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId String
+}
+
+model Habit {
+  id           String     @id @default(cuid())
+  name         String
+  cadenceJson  Json
+  reminderTime String?
+  color        String?
+  createdAt    DateTime   @default(now())
+  updatedAt    DateTime   @updatedAt
+
+  user   User       @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId String
+  logs   HabitLog[]
+}
+
+model HabitLog {
+  id        String   @id @default(cuid())
+  date      DateTime @db.Date
+  completed Boolean
+  value     Float?
+  createdAt DateTime @default(now())
+
+  habit   Habit  @relation(fields: [habitId], references: [id], onDelete: Cascade)
+  habitId String
+
+  @@unique([habitId, date])
+}
+
+model PlanningRun {
+  id        String   @id @default(cuid())
+  diffJson  Json
+  createdAt DateTime @default(now())
+
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId String
+}

@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Calendar - Project Setup</title>
+    <script src="https://cdn.tailwindcss.com?plugins=typography"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #030712; /* gray-950 */
+            color: #d1d5db; /* gray-300 */
+        }
+        .prose {
+            color: #d1d5db;
+        }
+        .prose h1, .prose h2, .prose h3 {
+            color: #ffffff;
+        }
+        .prose code {
+            color: #f3f4f6;
+            background-color: #1f2937;
+            padding: 0.2em 0.4em;
+            margin: 0;
+            font-size: 85%;
+            border-radius: 0.25rem;
+        }
+        .prose pre {
+            background-color: #111827;
+            border: 1px solid #374151;
+            border-radius: 0.5rem;
+        }
+        .prose pre code {
+            font-family: 'JetBrains Mono', monospace;
+        }
+        .prose a {
+            color: #60a5fa;
+        }
+    </style>
+</head>
+<body class="antialiased">
+    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12 sm:py-16">
+        <header class="text-center mb-12">
+            <h1 class="text-4xl sm:text-5xl font-bold tracking-tight text-white">AI Calendar Project</h1>
+            <p class="mt-4 text-lg text-gray-400">
+                This is a Next.js 14 application. To run the project, follow the setup instructions in the
+                <a href="README.md" class="underline hover:text-blue-400">README.md</a> file.
+            </p>
+             <a href="http://localhost:3000" target="_blank" rel="noopener noreferrer" class="mt-6 inline-block bg-blue-600 text-white font-semibold px-6 py-3 rounded-lg hover:bg-blue-500 transition-colors">
+                Run Development Server
+            </a>
+        </header>
+
+        <article class="prose prose-invert lg:prose-xl mx-auto">
+            <h2>About The Project</h2>
+            <p>
+                This project implements an AI-powered calendar application with a three-panel layout as specified. It uses React, Next.js, and TypeScript on the frontend, with a set of API routes providing backend functionality.
+            </p>
+            <h3>Core Components</h3>
+            <ul>
+                <li><strong>Calendar Panel:</strong> Displays events on a monthly calendar view.</li>
+                <li><strong>Chat Panel:</strong> An interactive chat interface to schedule and modify events using natural language.</li>
+                <li><strong>Habit Panel:</strong> A dedicated space to track and manage personal habits.</li>
+            </ul>
+            
+            <h2>Running the Application</h2>
+            <ol>
+                <li>Ensure you have Node.js v20+ installed.</li>
+                <li>Install dependencies: <code>npm install</code></li>
+                <li>Configure your <code>.env</code> file from <code>.env.example</code>.</li>
+                <li>Run database migrations: <code>npx prisma migrate dev</code></li>
+                <li>Start the development server: <code>npm run dev</code></li>
+            </ol>
+            <p>
+                Once running, the application will be available at <a href="http://localhost:3000">http://localhost:3000</a>.
+            </p>
+        </article>
+
+    </div>
+    <script>
+        lucide.createIcons();
+    </script>
+</body>
+</html>
